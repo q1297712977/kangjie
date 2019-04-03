@@ -1,0 +1,198 @@
+---------------------------------------------------------------
+[ 2019-04-03T10:51:30+08:00 ] 127.0.0.1 GET www.kangjie.com/index.php/admin/index/index
+[ sql ] [ DB ] CONNECT:[ UseTime:0.010966s ] mysql:host=127.0.0.1;dbname=kangjie;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `kj_auth_group_access` [ RunTime:0.005643s ]
+[ sql ] [ SQL ] SELECT `aga`.`uid`,`aga`.`group_id`,`ag`.`id`,`ag`.`pid`,`ag`.`name`,`ag`.`rules` FROM `kj_auth_group_access` `aga` LEFT JOIN `kj_auth_group` `ag` ON `aga`.`group_id`=`ag`.`id` WHERE  (  aga.uid='1' and ag.status='normal' ) [ RunTime:0.000567s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `kj_auth_rule` [ RunTime:0.006206s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`condition`,`icon`,`name`,`title`,`ismenu` FROM `kj_auth_rule` WHERE  `status` = 'normal' [ RunTime:0.000699s ]
+[ sql ] [ SQL ] SELECT * FROM `kj_auth_rule` WHERE  `status` = 'normal'  AND `ismenu` = 1 ORDER BY `weigh` DESC [ RunTime:0.000650s ]
+---------------------------------------------------------------
+[ 2019-04-03T10:51:31+08:00 ] 127.0.0.1 GET www.kangjie.com/index.php/admin/dashboard?addtabs=1
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001625s ] mysql:host=127.0.0.1;dbname=kangjie;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `kj_auth_group_access` [ RunTime:0.005128s ]
+[ sql ] [ SQL ] SELECT `aga`.`uid`,`aga`.`group_id`,`ag`.`id`,`ag`.`pid`,`ag`.`name`,`ag`.`rules` FROM `kj_auth_group_access` `aga` LEFT JOIN `kj_auth_group` `ag` ON `aga`.`group_id`=`ag`.`id` WHERE  (  aga.uid='1' and ag.status='normal' ) [ RunTime:0.000777s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `kj_auth_rule` [ RunTime:0.008404s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`condition`,`icon`,`name`,`title`,`ismenu` FROM `kj_auth_rule` WHERE  `status` = 'normal' [ RunTime:0.000947s ]
+[ sql ] [ SQL ] SELECT `title`,`remark` FROM `kj_auth_rule` WHERE  `name` = 'dashboard' LIMIT 1 [ RunTime:0.000571s ]
+---------------------------------------------------------------
+[ 2019-04-03T10:51:36+08:00 ] 127.0.0.1 GET www.kangjie.com/index.php/admin/user/user?addtabs=1
+[ sql ] [ DB ] CONNECT:[ UseTime:0.002439s ] mysql:host=127.0.0.1;dbname=kangjie;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `kj_auth_group_access` [ RunTime:0.005761s ]
+[ sql ] [ SQL ] SELECT `aga`.`uid`,`aga`.`group_id`,`ag`.`id`,`ag`.`pid`,`ag`.`name`,`ag`.`rules` FROM `kj_auth_group_access` `aga` LEFT JOIN `kj_auth_group` `ag` ON `aga`.`group_id`=`ag`.`id` WHERE  (  aga.uid='1' and ag.status='normal' ) [ RunTime:0.000500s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `kj_auth_rule` [ RunTime:0.005202s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`condition`,`icon`,`name`,`title`,`ismenu` FROM `kj_auth_rule` WHERE  `status` = 'normal' [ RunTime:0.000877s ]
+[ sql ] [ SQL ] SELECT `title`,`remark` FROM `kj_auth_rule` WHERE  `name` = 'user/user' LIMIT 1 [ RunTime:0.000643s ]
+---------------------------------------------------------------
+[ 2019-04-03T10:51:36+08:00 ] 127.0.0.1 GET www.kangjie.com/index.php/admin/user/user/index?sort=user.id&order=desc&offset=0&limit=10&filter=%7B%7D&op=%7B%7D&_=1554259896130
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001498s ] mysql:host=127.0.0.1;dbname=kangjie;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `kj_auth_group_access` [ RunTime:0.005538s ]
+[ sql ] [ SQL ] SELECT `aga`.`uid`,`aga`.`group_id`,`ag`.`id`,`ag`.`pid`,`ag`.`name`,`ag`.`rules` FROM `kj_auth_group_access` `aga` LEFT JOIN `kj_auth_group` `ag` ON `aga`.`group_id`=`ag`.`id` WHERE  (  aga.uid='1' and ag.status='normal' ) [ RunTime:0.000582s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `kj_auth_rule` [ RunTime:0.005603s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`condition`,`icon`,`name`,`title`,`ismenu` FROM `kj_auth_rule` WHERE  `status` = 'normal' [ RunTime:0.000908s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `kj_user` [ RunTime:0.007886s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `kj_user_group` [ RunTime:0.005002s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM `kj_user` `user` LEFT JOIN `kj_user_group` `group` ON `user`.`group_id`=`group`.`id` ORDER BY `user`.`id` DESC LIMIT 1 [ RunTime:0.000531s ]
+[ sql ] [ SQL ] SELECT `user`.`id`,`user`.`group_id`,`user`.`username`,`user`.`nickname`,`user`.`password`,`user`.`salt`,`user`.`email`,`user`.`mobile`,`user`.`avatar`,`user`.`level`,`user`.`gender`,`user`.`birthday`,`user`.`bio`,`user`.`money`,`user`.`score`,`user`.`successions`,`user`.`maxsuccessions`,`user`.`prevtime`,`user`.`logintime`,`user`.`loginip`,`user`.`loginfailure`,`user`.`joinip`,`user`.`jointime`,`user`.`createtime`,`user`.`updatetime`,`user`.`token`,`user`.`status`,`user`.`verification`,group.id AS group__id,group.name AS group__name,group.rules AS group__rules,group.createtime AS group__createtime,group.updatetime AS group__updatetime,group.status AS group__status FROM `kj_user` `user` LEFT JOIN `kj_user_group` `group` ON `user`.`group_id`=`group`.`id` ORDER BY `user`.`id` DESC LIMIT 0,10 [ RunTime:0.000722s ]
+---------------------------------------------------------------
+[ 2019-04-03T10:51:37+08:00 ] 127.0.0.1 GET www.kangjie.com/index.php/admin/user/group?addtabs=1
+[ sql ] [ DB ] CONNECT:[ UseTime:0.012124s ] mysql:host=127.0.0.1;dbname=kangjie;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `kj_auth_group_access` [ RunTime:0.005792s ]
+[ sql ] [ SQL ] SELECT `aga`.`uid`,`aga`.`group_id`,`ag`.`id`,`ag`.`pid`,`ag`.`name`,`ag`.`rules` FROM `kj_auth_group_access` `aga` LEFT JOIN `kj_auth_group` `ag` ON `aga`.`group_id`=`ag`.`id` WHERE  (  aga.uid='1' and ag.status='normal' ) [ RunTime:0.000480s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `kj_auth_rule` [ RunTime:0.005928s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`condition`,`icon`,`name`,`title`,`ismenu` FROM `kj_auth_rule` WHERE  `status` = 'normal' [ RunTime:0.000691s ]
+[ sql ] [ SQL ] SELECT `title`,`remark` FROM `kj_auth_rule` WHERE  `name` = 'user/group' LIMIT 1 [ RunTime:0.000844s ]
+---------------------------------------------------------------
+[ 2019-04-03T10:51:37+08:00 ] 127.0.0.1 GET www.kangjie.com/index.php/admin/user/group/index?sort=id&order=desc&offset=0&limit=10&filter=%7B%7D&op=%7B%7D&_=1554259897119
+[ sql ] [ DB ] CONNECT:[ UseTime:0.012354s ] mysql:host=127.0.0.1;dbname=kangjie;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `kj_auth_group_access` [ RunTime:0.005343s ]
+[ sql ] [ SQL ] SELECT `aga`.`uid`,`aga`.`group_id`,`ag`.`id`,`ag`.`pid`,`ag`.`name`,`ag`.`rules` FROM `kj_auth_group_access` `aga` LEFT JOIN `kj_auth_group` `ag` ON `aga`.`group_id`=`ag`.`id` WHERE  (  aga.uid='1' and ag.status='normal' ) [ RunTime:0.000457s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `kj_auth_rule` [ RunTime:0.006677s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`condition`,`icon`,`name`,`title`,`ismenu` FROM `kj_auth_rule` WHERE  `status` = 'normal' [ RunTime:0.000686s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `kj_user_group` [ RunTime:0.006050s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM `kj_user_group` ORDER BY `id` DESC LIMIT 1 [ RunTime:0.000374s ]
+[ sql ] [ SQL ] SELECT * FROM `kj_user_group` ORDER BY `id` DESC LIMIT 0,10 [ RunTime:0.000335s ]
+---------------------------------------------------------------
+[ 2019-04-03T10:51:38+08:00 ] 127.0.0.1 GET www.kangjie.com/index.php/admin/user/group/add?dialog=1
+[ sql ] [ DB ] CONNECT:[ UseTime:0.011698s ] mysql:host=127.0.0.1;dbname=kangjie;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `kj_auth_group_access` [ RunTime:0.059872s ]
+[ sql ] [ SQL ] SELECT `aga`.`uid`,`aga`.`group_id`,`ag`.`id`,`ag`.`pid`,`ag`.`name`,`ag`.`rules` FROM `kj_auth_group_access` `aga` LEFT JOIN `kj_auth_group` `ag` ON `aga`.`group_id`=`ag`.`id` WHERE  (  aga.uid='1' and ag.status='normal' ) [ RunTime:0.000473s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `kj_auth_rule` [ RunTime:0.008178s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`condition`,`icon`,`name`,`title`,`ismenu` FROM `kj_auth_rule` WHERE  `status` = 'normal' [ RunTime:0.000728s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `kj_user_rule` [ RunTime:0.009139s ]
+[ sql ] [ SQL ] SELECT * FROM `kj_user_rule` WHERE  `status` = 'normal' ORDER BY `weigh` DESC,`id` DESC [ RunTime:0.000559s ]
+---------------------------------------------------------------
+[ 2019-04-03T10:51:44+08:00 ] 127.0.0.1 GET www.kangjie.com/index.php/admin/auth/group?addtabs=1
+[ sql ] [ DB ] CONNECT:[ UseTime:0.011059s ] mysql:host=127.0.0.1;dbname=kangjie;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `kj_auth_group_access` [ RunTime:0.616008s ]
+[ sql ] [ SQL ] SELECT `aga`.`uid`,`aga`.`group_id`,`ag`.`id`,`ag`.`pid`,`ag`.`name`,`ag`.`rules` FROM `kj_auth_group_access` `aga` LEFT JOIN `kj_auth_group` `ag` ON `aga`.`group_id`=`ag`.`id` WHERE  (  aga.uid='1' and ag.status='normal' ) [ RunTime:0.000585s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `kj_auth_rule` [ RunTime:0.006763s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`condition`,`icon`,`name`,`title`,`ismenu` FROM `kj_auth_rule` WHERE  `status` = 'normal' [ RunTime:0.000763s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `kj_auth_group` [ RunTime:0.006883s ]
+[ sql ] [ SQL ] SELECT * FROM `kj_auth_group` WHERE  `status` = 'normal' [ RunTime:0.000566s ]
+[ sql ] [ SQL ] SELECT * FROM `kj_auth_group` WHERE  `id` IN (1,2,3,4,5) [ RunTime:0.000512s ]
+[ sql ] [ SQL ] SELECT `title`,`remark` FROM `kj_auth_rule` WHERE  `name` = 'auth/group' LIMIT 1 [ RunTime:0.000524s ]
+---------------------------------------------------------------
+[ 2019-04-03T10:51:44+08:00 ] 127.0.0.1 GET www.kangjie.com/index.php/admin/auth/group/index?sort=id&order=desc&_=1554259904741
+[ sql ] [ DB ] CONNECT:[ UseTime:0.011763s ] mysql:host=127.0.0.1;dbname=kangjie;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `kj_auth_group_access` [ RunTime:0.004790s ]
+[ sql ] [ SQL ] SELECT `aga`.`uid`,`aga`.`group_id`,`ag`.`id`,`ag`.`pid`,`ag`.`name`,`ag`.`rules` FROM `kj_auth_group_access` `aga` LEFT JOIN `kj_auth_group` `ag` ON `aga`.`group_id`=`ag`.`id` WHERE  (  aga.uid='1' and ag.status='normal' ) [ RunTime:0.000464s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `kj_auth_rule` [ RunTime:0.007445s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`condition`,`icon`,`name`,`title`,`ismenu` FROM `kj_auth_rule` WHERE  `status` = 'normal' [ RunTime:0.000774s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `kj_auth_group` [ RunTime:0.007598s ]
+[ sql ] [ SQL ] SELECT * FROM `kj_auth_group` WHERE  `status` = 'normal' [ RunTime:0.000489s ]
+[ sql ] [ SQL ] SELECT * FROM `kj_auth_group` WHERE  `id` IN (1,2,3,4,5) [ RunTime:0.000494s ]
+[ sql ] [ SQL ] SELECT * FROM `kj_auth_group` WHERE  `id` IN (1,2,3,5,4) [ RunTime:0.000515s ]
+---------------------------------------------------------------
+[ 2019-04-03T10:51:45+08:00 ] 127.0.0.1 GET www.kangjie.com/index.php/admin/auth/group/add?dialog=1
+[ sql ] [ DB ] CONNECT:[ UseTime:0.011904s ] mysql:host=127.0.0.1;dbname=kangjie;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `kj_auth_group_access` [ RunTime:0.007147s ]
+[ sql ] [ SQL ] SELECT `aga`.`uid`,`aga`.`group_id`,`ag`.`id`,`ag`.`pid`,`ag`.`name`,`ag`.`rules` FROM `kj_auth_group_access` `aga` LEFT JOIN `kj_auth_group` `ag` ON `aga`.`group_id`=`ag`.`id` WHERE  (  aga.uid='1' and ag.status='normal' ) [ RunTime:0.000705s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `kj_auth_rule` [ RunTime:0.006298s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`condition`,`icon`,`name`,`title`,`ismenu` FROM `kj_auth_rule` WHERE  `status` = 'normal' [ RunTime:0.000773s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `kj_auth_group` [ RunTime:0.006914s ]
+[ sql ] [ SQL ] SELECT * FROM `kj_auth_group` WHERE  `status` = 'normal' [ RunTime:0.000586s ]
+[ sql ] [ SQL ] SELECT * FROM `kj_auth_group` WHERE  `id` IN (1,2,3,4,5) [ RunTime:0.000454s ]
+---------------------------------------------------------------
+[ 2019-04-03T10:51:46+08:00 ] 127.0.0.1 POST www.kangjie.com/index.php/admin/auth/group/roletree
+[ sql ] [ DB ] CONNECT:[ UseTime:0.011804s ] mysql:host=127.0.0.1;dbname=kangjie;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `kj_auth_group_access` [ RunTime:0.005198s ]
+[ sql ] [ SQL ] SELECT `aga`.`uid`,`aga`.`group_id`,`ag`.`id`,`ag`.`pid`,`ag`.`name`,`ag`.`rules` FROM `kj_auth_group_access` `aga` LEFT JOIN `kj_auth_group` `ag` ON `aga`.`group_id`=`ag`.`id` WHERE  (  aga.uid='1' and ag.status='normal' ) [ RunTime:0.000541s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `kj_auth_group` [ RunTime:0.006660s ]
+[ sql ] [ SQL ] SELECT * FROM `kj_auth_group` WHERE  `status` = 'normal' [ RunTime:0.000523s ]
+[ sql ] [ SQL ] SELECT * FROM `kj_auth_group` WHERE  `id` IN (1,2,3,4,5) [ RunTime:0.000485s ]
+[ sql ] [ SQL ] SELECT * FROM `kj_auth_group` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000683s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `kj_auth_rule` [ RunTime:0.006701s ]
+[ sql ] [ SQL ] SELECT * FROM `kj_auth_rule` ORDER BY `weigh` DESC [ RunTime:0.001518s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `kj_admin_log` [ RunTime:0.005977s ]
+[ sql ] [ SQL ] INSERT INTO `kj_admin_log` (`title` , `content` , `url` , `admin_id` , `username` , `useragent` , `ip` , `createtime`) VALUES ('' , '{\"pid\":\"1\"}' , '/index.php/admin/auth/group/roletree' , 1 , 'admin' , 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36' , '127.0.0.1' , 1554259906) [ RunTime:0.452127s ]
+---------------------------------------------------------------
+[ 2019-04-03T10:51:48+08:00 ] 127.0.0.1 GET www.kangjie.com/index.php/admin/auth/admin?addtabs=1
+[ sql ] [ DB ] CONNECT:[ UseTime:0.010839s ] mysql:host=127.0.0.1;dbname=kangjie;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `kj_auth_group_access` [ RunTime:0.007704s ]
+[ sql ] [ SQL ] SELECT `aga`.`uid`,`aga`.`group_id`,`ag`.`id`,`ag`.`pid`,`ag`.`name`,`ag`.`rules` FROM `kj_auth_group_access` `aga` LEFT JOIN `kj_auth_group` `ag` ON `aga`.`group_id`=`ag`.`id` WHERE  (  aga.uid='1' and ag.status='normal' ) [ RunTime:0.000553s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `kj_auth_rule` [ RunTime:0.004971s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`condition`,`icon`,`name`,`title`,`ismenu` FROM `kj_auth_rule` WHERE  `status` = 'normal' [ RunTime:0.000673s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `kj_admin` [ RunTime:0.009785s ]
+[ sql ] [ SQL ] SELECT `id` FROM `kj_admin` [ RunTime:0.000610s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `kj_auth_group` [ RunTime:0.006333s ]
+[ sql ] [ SQL ] SELECT * FROM `kj_auth_group` WHERE  `status` = 'normal' [ RunTime:0.000591s ]
+[ sql ] [ SQL ] SELECT * FROM `kj_auth_group` WHERE  `id` IN (1,2,3,4,5) [ RunTime:0.000489s ]
+[ sql ] [ SQL ] SELECT `title`,`remark` FROM `kj_auth_rule` WHERE  `name` = 'auth/admin' LIMIT 1 [ RunTime:0.000680s ]
+---------------------------------------------------------------
+[ 2019-04-03T10:51:48+08:00 ] 127.0.0.1 GET www.kangjie.com/index.php/admin/auth/admin/index?sort=id&order=desc&offset=0&limit=10&filter=%7B%7D&op=%7B%7D&_=1554259908076
+[ sql ] [ DB ] CONNECT:[ UseTime:0.011239s ] mysql:host=127.0.0.1;dbname=kangjie;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `kj_auth_group_access` [ RunTime:0.005574s ]
+[ sql ] [ SQL ] SELECT `aga`.`uid`,`aga`.`group_id`,`ag`.`id`,`ag`.`pid`,`ag`.`name`,`ag`.`rules` FROM `kj_auth_group_access` `aga` LEFT JOIN `kj_auth_group` `ag` ON `aga`.`group_id`=`ag`.`id` WHERE  (  aga.uid='1' and ag.status='normal' ) [ RunTime:0.000564s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `kj_auth_rule` [ RunTime:0.006848s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`condition`,`icon`,`name`,`title`,`ismenu` FROM `kj_auth_rule` WHERE  `status` = 'normal' [ RunTime:0.000684s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `kj_admin` [ RunTime:0.007895s ]
+[ sql ] [ SQL ] SELECT `id` FROM `kj_admin` [ RunTime:0.000377s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `kj_auth_group` [ RunTime:0.005889s ]
+[ sql ] [ SQL ] SELECT * FROM `kj_auth_group` WHERE  `status` = 'normal' [ RunTime:0.000483s ]
+[ sql ] [ SQL ] SELECT * FROM `kj_auth_group` WHERE  `id` IN (1,2,3,4,5) [ RunTime:0.000648s ]
+[ sql ] [ SQL ] SELECT `id`,`name` FROM `kj_auth_group` WHERE  `id` IN (1,2,3,4,5) [ RunTime:0.000574s ]
+[ sql ] [ SQL ] SELECT `uid`,`group_id` FROM `kj_auth_group_access` WHERE  `group_id` IN (1,2,3,4,5) [ RunTime:0.000479s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM `kj_admin` WHERE  `id` IN (1) ORDER BY `id` DESC LIMIT 1 [ RunTime:0.000412s ]
+[ sql ] [ SQL ] SELECT `id`,`username`,`nickname`,`avatar`,`email`,`loginfailure`,`logintime`,`createtime`,`updatetime`,`status` FROM `kj_admin` WHERE  `id` IN (1) ORDER BY `id` DESC LIMIT 0,10 [ RunTime:0.000448s ]
+---------------------------------------------------------------
+[ 2019-04-03T10:51:49+08:00 ] 127.0.0.1 GET www.kangjie.com/index.php/admin/auth/admin/add?dialog=1
+[ sql ] [ DB ] CONNECT:[ UseTime:0.011569s ] mysql:host=127.0.0.1;dbname=kangjie;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `kj_auth_group_access` [ RunTime:0.006862s ]
+[ sql ] [ SQL ] SELECT `aga`.`uid`,`aga`.`group_id`,`ag`.`id`,`ag`.`pid`,`ag`.`name`,`ag`.`rules` FROM `kj_auth_group_access` `aga` LEFT JOIN `kj_auth_group` `ag` ON `aga`.`group_id`=`ag`.`id` WHERE  (  aga.uid='1' and ag.status='normal' ) [ RunTime:0.000634s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `kj_auth_rule` [ RunTime:0.006917s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`condition`,`icon`,`name`,`title`,`ismenu` FROM `kj_auth_rule` WHERE  `status` = 'normal' [ RunTime:0.000709s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `kj_admin` [ RunTime:0.005260s ]
+[ sql ] [ SQL ] SELECT `id` FROM `kj_admin` [ RunTime:0.000519s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `kj_auth_group` [ RunTime:0.007951s ]
+[ sql ] [ SQL ] SELECT * FROM `kj_auth_group` WHERE  `status` = 'normal' [ RunTime:0.000610s ]
+[ sql ] [ SQL ] SELECT * FROM `kj_auth_group` WHERE  `id` IN (1,2,3,4,5) [ RunTime:0.000559s ]
+---------------------------------------------------------------
+[ 2019-04-03T10:51:53+08:00 ] 127.0.0.1 GET www.kangjie.com/index.php/admin/auth/group/index?sort=id&order=desc&_=1554259904742
+[ sql ] [ DB ] CONNECT:[ UseTime:0.012179s ] mysql:host=127.0.0.1;dbname=kangjie;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `kj_auth_group_access` [ RunTime:0.005524s ]
+[ sql ] [ SQL ] SELECT `aga`.`uid`,`aga`.`group_id`,`ag`.`id`,`ag`.`pid`,`ag`.`name`,`ag`.`rules` FROM `kj_auth_group_access` `aga` LEFT JOIN `kj_auth_group` `ag` ON `aga`.`group_id`=`ag`.`id` WHERE  (  aga.uid='1' and ag.status='normal' ) [ RunTime:0.000464s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `kj_auth_rule` [ RunTime:0.006617s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`condition`,`icon`,`name`,`title`,`ismenu` FROM `kj_auth_rule` WHERE  `status` = 'normal' [ RunTime:0.000747s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `kj_auth_group` [ RunTime:0.006696s ]
+[ sql ] [ SQL ] SELECT * FROM `kj_auth_group` WHERE  `status` = 'normal' [ RunTime:0.000591s ]
+[ sql ] [ SQL ] SELECT * FROM `kj_auth_group` WHERE  `id` IN (1,2,3,4,5) [ RunTime:0.000487s ]
+[ sql ] [ SQL ] SELECT * FROM `kj_auth_group` WHERE  `id` IN (1,2,3,5,4) [ RunTime:0.000487s ]
+---------------------------------------------------------------
+[ 2019-04-03T10:51:54+08:00 ] 127.0.0.1 GET www.kangjie.com/index.php/admin/auth/group/add?dialog=1
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001167s ] mysql:host=127.0.0.1;dbname=kangjie;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `kj_auth_group_access` [ RunTime:0.008294s ]
+[ sql ] [ SQL ] SELECT `aga`.`uid`,`aga`.`group_id`,`ag`.`id`,`ag`.`pid`,`ag`.`name`,`ag`.`rules` FROM `kj_auth_group_access` `aga` LEFT JOIN `kj_auth_group` `ag` ON `aga`.`group_id`=`ag`.`id` WHERE  (  aga.uid='1' and ag.status='normal' ) [ RunTime:0.000525s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `kj_auth_rule` [ RunTime:0.007092s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`condition`,`icon`,`name`,`title`,`ismenu` FROM `kj_auth_rule` WHERE  `status` = 'normal' [ RunTime:0.000704s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `kj_auth_group` [ RunTime:0.005502s ]
+[ sql ] [ SQL ] SELECT * FROM `kj_auth_group` WHERE  `status` = 'normal' [ RunTime:0.000516s ]
+[ sql ] [ SQL ] SELECT * FROM `kj_auth_group` WHERE  `id` IN (1,2,3,4,5) [ RunTime:0.000451s ]
+---------------------------------------------------------------
+[ 2019-04-03T10:51:54+08:00 ] 127.0.0.1 POST www.kangjie.com/index.php/admin/auth/group/roletree
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001122s ] mysql:host=127.0.0.1;dbname=kangjie;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `kj_auth_group_access` [ RunTime:0.006267s ]
+[ sql ] [ SQL ] SELECT `aga`.`uid`,`aga`.`group_id`,`ag`.`id`,`ag`.`pid`,`ag`.`name`,`ag`.`rules` FROM `kj_auth_group_access` `aga` LEFT JOIN `kj_auth_group` `ag` ON `aga`.`group_id`=`ag`.`id` WHERE  (  aga.uid='1' and ag.status='normal' ) [ RunTime:0.000510s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `kj_auth_group` [ RunTime:0.008032s ]
+[ sql ] [ SQL ] SELECT * FROM `kj_auth_group` WHERE  `status` = 'normal' [ RunTime:0.000487s ]
+[ sql ] [ SQL ] SELECT * FROM `kj_auth_group` WHERE  `id` IN (1,2,3,4,5) [ RunTime:0.000446s ]
+[ sql ] [ SQL ] SELECT * FROM `kj_auth_group` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000566s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `kj_auth_rule` [ RunTime:0.006034s ]
+[ sql ] [ SQL ] SELECT * FROM `kj_auth_rule` ORDER BY `weigh` DESC [ RunTime:0.001020s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `kj_admin_log` [ RunTime:0.005812s ]
+[ sql ] [ SQL ] INSERT INTO `kj_admin_log` (`title` , `content` , `url` , `admin_id` , `username` , `useragent` , `ip` , `createtime`) VALUES ('' , '{\"pid\":\"1\"}' , '/index.php/admin/auth/group/roletree' , 1 , 'admin' , 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36' , '127.0.0.1' , 1554259914) [ RunTime:0.025299s ]
+---------------------------------------------------------------
+[ 2019-04-03T10:51:56+08:00 ] 127.0.0.1 GET www.kangjie.com/index.php/admin/auth/admin/index?sort=id&order=desc&offset=0&limit=10&filter=%7B%7D&op=%7B%7D&_=1554259908077
+[ sql ] [ DB ] CONNECT:[ UseTime:0.012196s ] mysql:host=127.0.0.1;dbname=kangjie;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `kj_auth_group_access` [ RunTime:0.005567s ]
+[ sql ] [ SQL ] SELECT `aga`.`uid`,`aga`.`group_id`,`ag`.`id`,`ag`.`pid`,`ag`.`name`,`ag`.`rules` FROM `kj_auth_group_access` `aga` LEFT JOIN `kj_auth_group` `ag` ON `aga`.`group_id`=`ag`.`id` WHERE  (  aga.uid='1' and ag.status='normal' ) [ RunTime:0.000516s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `kj_auth_rule` [ RunTime:0.006984s ]
+[ sql ] [ SQL ] SELECT `id`,`pid`,`condition`,`icon`,`name`,`title`,`ismenu` FROM `kj_auth_rule` WHERE  `status` = 'normal' [ RunTime:0.000990s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `kj_admin` [ RunTime:0.006018s ]
+[ sql ] [ SQL ] SELECT `id` FROM `kj_admin` [ RunTime:0.000422s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `kj_auth_group` [ RunTime:0.005302s ]
+[ sql ] [ SQL ] SELECT * FROM `kj_auth_group` WHERE  `status` = 'normal' [ RunTime:0.000507s ]
+[ sql ] [ SQL ] SELECT * FROM `kj_auth_group` WHERE  `id` IN (1,2,3,4,5) [ RunTime:0.000498s ]
+[ sql ] [ SQL ] SELECT `id`,`name` FROM `kj_auth_group` WHERE  `id` IN (1,2,3,4,5) [ RunTime:0.000513s ]
+[ sql ] [ SQL ] SELECT `uid`,`group_id` FROM `kj_auth_group_access` WHERE  `group_id` IN (1,2,3,4,5) [ RunTime:0.000437s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM `kj_admin` WHERE  `id` IN (1) ORDER BY `id` DESC LIMIT 1 [ RunTime:0.000508s ]
+[ sql ] [ SQL ] SELECT `id`,`username`,`nickname`,`avatar`,`email`,`loginfailure`,`logintime`,`createtime`,`updatetime`,`status` FROM `kj_admin` WHERE  `id` IN (1) ORDER BY `id` DESC LIMIT 0,10 [ RunTime:0.000533s ]
