@@ -29,6 +29,7 @@ class Tree
     public $icon = array('│', '├', '└');
     public $nbsp = "&nbsp;";
     public $pidname = 'pid';
+//    public $groupid = 'groupid';
 
     public function __construct($options = [])
     {

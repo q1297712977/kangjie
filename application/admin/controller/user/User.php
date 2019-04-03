@@ -3,6 +3,9 @@
 namespace app\admin\controller\user;
 
 use app\common\controller\Backend;
+use app\admin\model\UserGroup;
+use fast\Random;
+use fast\Tree;
 
 /**
  * 会员管理
@@ -13,8 +16,8 @@ class User extends Backend
 {
 
     protected $relationSearch = true;
-
-
+    protected $childrenGroupIds = [];
+    protected $dataLimit = 'auth';
     /**
      * @var \app\admin\model\User
      */
@@ -24,6 +27,41 @@ class User extends Backend
     {
         parent::_initialize();
         $this->model = model('User');
+
+        $this->childrenAdminIds = $this->auth->getChildrenAdminIds(true);
+        $this->childrenGroupIds = $this->auth->getChildrenGroupIds(true);
+
+        $groupList = collection(UserGroup::where('id', 'in', $this->childrenGroupIds)->select())->toArray();
+
+        Tree::instance()->init($groupList);
+        $groupdata = [];
+//        if ($this->auth->isSuperAdmin())
+//        {
+//            $result = Tree::instance()->getTreeList(Tree::instance()->getTreeArray(0));
+//            foreach ($result as $k => $v)
+//            {
+//                $groupdata[$v['id']] = $v['name'];
+//            }
+//        }
+//        else
+//        {
+//            $result = [];
+//            $groups = $this->auth->getGroups();
+//            foreach ($groups as $m => $n)
+//            {
+//                $childlist = Tree::instance()->getTreeList(Tree::instance()->getTreeArray($n['id']));
+//                $temp = [];
+//                foreach ($childlist as $k => $v)
+//                {
+//                    $temp[$v['id']] = $v['name'];
+//                }
+//                $result[__($n['name'])] = $temp;
+//            }
+//            $groupdata = $result;
+//        }
+
+        $this->view->assign('groupdata', $groupdata);
+        $this->assignconfig("admin", ['id' => $this->auth->id]);
     }
 
     /**
@@ -68,77 +106,60 @@ class User extends Backend
      */
     public function edit($ids = NULL)
     {
+
         $row = $this->model->get($ids);
         if (!$row)
             $this->error(__('No Results were found'));
+//        var_dump($row);
         $this->view->assign('groupList', build_select('row[group_id]', \app\admin\model\UserGroup::column('id,name'), $row['group_id'], ['class' => 'form-control selectpicker']));
         return parent::edit($ids);
     }
     /*
      * 注册
      * */
-    public function register()
+    public function add()
     {
-        $url = $this->request->request('url');
-        if ($this->auth->id)
-            $this->success(__('You\'ve logged in, do not login again'), $url);
-        if ($this->request->isPost()) {
-            $username = $this->request->post('username');
-            $password = $this->request->post('password');
-            $email = $this->request->post('email');
-            $mobile = $this->request->post('mobile', '');
-            $token = $this->request->post('__token__');
-            $rule = [
-                'username'  => 'require|length:3,30',
-                'password'  => 'require|length:6,30',
-                'email'     => 'require|email',
-                'mobile'    => 'regex:/^1\d{10}$/',
-                '__token__' => 'token',
-            ];
+        $id = session('admin')['id'];
+        $row = $this->model->get($id);
+//        var_dump($row);
+        //展示当前登录信息的所有分组
+        if (!$row)
+            $this->error(__('No Results were found'));
+        $this->view->assign('groupList', build_select('row[group_id]', \app\admin\model\UserGroup::column('id,name'), $row['group_id'], ['class' => 'form-control selectpicker']));
 
-            $msg = [
-                'username.require' => 'Username can not be empty',
-                'username.length'  => 'Username must be 3 to 30 characters',
-                'password.require' => 'Password can not be empty',
-                'password.length'  => 'Password must be 6 to 30 characters',
-                'email'            => 'Email is incorrect',
-                'mobile'           => 'Mobile is incorrect',
-            ];
-            $data = [
-                'username'  => $username,
-                'password'  => $password,
-                'email'     => $email,
-                'mobile'    => $mobile,
-                '__token__' => $token,
-            ];
-            $validate = new Validate($rule, $msg);
-            $result = $validate->check($data);
-            if (!$result) {
-                $this->error(__($validate->getError()), null, ['token' => $this->request->token()]);
-            }
-            if ($this->auth->register($username, $password, $email, $mobile)) {
-                $synchtml = '';
-                ////////////////同步到Ucenter////////////////
-                if (defined('UC_STATUS') && UC_STATUS) {
-                    $uc = new \addons\ucenter\library\client\Client();
-                    $synchtml = $uc->uc_user_synregister($this->auth->id, $password);
+        if ($this->request->isPost())
+        {
+            $params = $this->request->post("row/a");
+//            var_dump($params);
+            if ($params)
+            {
+                $params['salt'] = Random::alnum();
+                $params['password'] = md5(md5($params['password']) . $params['salt']);
+                $params['avatar'] = '/assets/img/avatar.png'; //设置新管理员默认头像。
+                $result = $this->model->validate('User.add')->save($params);
+                if ($result === false)
+                {
+                    $this->error($this->model->getError());
                 }
-                $this->success(__('Sign up successful') . $synchtml, $url ? $url : url('user/index'));
-            } else {
-                $this->error($this->auth->getError(), null, ['token' => $this->request->token()]);
+                $group = $this->request->post('row/a');
+//                var_dump($group);
+                //过滤不允许的组别,避免越权
+//                var_dump($this->childrenGroupIds);
+                $group = array_intersect($this->childrenGroupIds, $group);
+                $dataset = [];
+                foreach ($group as $value)
+                {
+                    $dataset[] = ['user_id' => $this->model->id, 'admin_id' => $id];
+                }
+                model('Attachment')->saveAll($dataset);
+                $this->success();
             }
+
+                $this->error();
+
         }
-        //判断来源
-        $referer = $this->request->server('HTTP_REFERER');
-        if (!$url && (strtolower(parse_url($referer, PHP_URL_HOST)) == strtolower($this->request->host()))
-            && !preg_match("/(user\/login|user\/register)/i", $referer)) {
-            $url = $referer;
-        }
-        $this->view->assign('url', $url);
-        $this->view->assign('title', __('Register'));
-        $this->view->assign('groupList', build_select('1', \app\admin\model\UserGroup::column('id,name'), $row['group_id'], ['class' => 'form-control selectpicker']));
-//        return $this->view->fetch();
-        return parent::add();
+        return $this->view->fetch();
+//        return parent::add();
     }
 
 }

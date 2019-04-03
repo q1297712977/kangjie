@@ -142,7 +142,9 @@ class Admin extends Backend
                     $this->error($this->model->getError());
                 }
                 $group = $this->request->post("group/a");
-
+                $gp = $this->request->post();
+//                var_dump($group);
+//                print_r($gp);
                 //过滤不允许的组别,避免越权
                 $group = array_intersect($this->childrenGroupIds, $group);
                 $dataset = [];
