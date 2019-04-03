@@ -72,6 +72,7 @@ class Admin extends Backend
     {
         if ($this->request->isAjax())
         {
+            
             //如果发送的来源是Selectpage，则转发到Selectpage
             if ($this->request->request('keyField'))
             {
@@ -157,7 +158,7 @@ class Admin extends Backend
             }
             $this->error();
         }
-        return $this->view->fetch();
+        return view();
     }
 
     /**

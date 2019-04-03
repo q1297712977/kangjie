@@ -17,7 +17,13 @@ class User extends Backend
 
     protected $relationSearch = true;
     protected $childrenGroupIds = [];
-    protected $dataLimit = 'auth';
+
+    # 会员角色组IDS
+    protected $userGroup = '';
+
+    # 会员角色组
+    protected $groupList = [];
+
     /**
      * @var \app\admin\model\User
      */
@@ -26,42 +32,35 @@ class User extends Backend
     public function _initialize()
     {
         parent::_initialize();
+
         $this->model = model('User');
 
         $this->childrenAdminIds = $this->auth->getChildrenAdminIds(true);
-        $this->childrenGroupIds = $this->auth->getChildrenGroupIds(true);
 
-        $groupList = collection(UserGroup::where('id', 'in', $this->childrenGroupIds)->select())->toArray();
+        $childrenAdminIds = implode(',',$this->childrenAdminIds);
+        # 判断当前登陆的人员信息
+        if ($this->auth->isSuperAdmin())
+        {
+            # 如果是超级管理员，查询所有会员角色组
+            $userGroup = collection(UserGroup::select())->toArray();
+        }else{
+            # 不是超级管理员，查询当前管理员所拥有的会员角色组
+            $userGroup = collection(UserGroup::where('admin_id', 'in', implode(',',$this->childrenAdminIds) )->select())->toArray();
+        }
+        # 将查询结果中的id转成字符串，方便使用in
+        $temp = '';
+        foreach ($userGroup as $value) {
+            $temp .= $value['id'].',';
+        }
+        $this->userGroup = rtrim($temp,',');
+        # 处理添加会员中的下拉菜单
+        $temp = [];
+        foreach ($userGroup as $value) {
+            $temp[$value['id']] = $value['name']; 
+        }
+        $this->groupList = $temp;
+        
 
-        Tree::instance()->init($groupList);
-        $groupdata = [];
-//        if ($this->auth->isSuperAdmin())
-//        {
-//            $result = Tree::instance()->getTreeList(Tree::instance()->getTreeArray(0));
-//            foreach ($result as $k => $v)
-//            {
-//                $groupdata[$v['id']] = $v['name'];
-//            }
-//        }
-//        else
-//        {
-//            $result = [];
-//            $groups = $this->auth->getGroups();
-//            foreach ($groups as $m => $n)
-//            {
-//                $childlist = Tree::instance()->getTreeList(Tree::instance()->getTreeArray($n['id']));
-//                $temp = [];
-//                foreach ($childlist as $k => $v)
-//                {
-//                    $temp[$v['id']] = $v['name'];
-//                }
-//                $result[__($n['name'])] = $temp;
-//            }
-//            $groupdata = $result;
-//        }
-
-        $this->view->assign('groupdata', $groupdata);
-        $this->assignconfig("admin", ['id' => $this->auth->id]);
     }
 
     /**
@@ -78,18 +77,22 @@ class User extends Backend
             {
                 return $this->selectpage();
             }
+
             list($where, $sort, $order, $offset, $limit) = $this->buildparams();
             $total = $this->model
                     ->with('group')
                     ->where($where)
+                    ->where('group_id','in',$this->userGroup)
                     ->order($sort, $order)
                     ->count();
             $list = $this->model
                     ->with('group')
                     ->where($where)
+                    ->where('group_id','in',$this->userGroup)
                     ->order($sort, $order)
                     ->limit($offset, $limit)
                     ->select();
+
             foreach ($list as $k => $v)
             {
                 $v->hidden(['password', 'salt']);
@@ -111,7 +114,7 @@ class User extends Backend
         if (!$row)
             $this->error(__('No Results were found'));
 //        var_dump($row);
-        $this->view->assign('groupList', build_select('row[group_id]', \app\admin\model\UserGroup::column('id,name'), $row['group_id'], ['class' => 'form-control selectpicker']));
+        $this->view->assign('groupList', build_select('row[group_id]', $this->groupList, $row['group_id'], ['class' => 'form-control selectpicker']));
         return parent::edit($ids);
     }
     /*
@@ -119,13 +122,14 @@ class User extends Backend
      * */
     public function add()
     {
-        $id = session('admin')['id'];
-        $row = $this->model->get($id);
-//        var_dump($row);
         //展示当前登录信息的所有分组
-        if (!$row)
-            $this->error(__('No Results were found'));
-        $this->view->assign('groupList', build_select('row[group_id]', \app\admin\model\UserGroup::column('id,name'), $row['group_id'], ['class' => 'form-control selectpicker']));
+        $this->view->assign(
+            'groupList', 
+            build_select('row[group_id]', 
+            $this->groupList, 
+            '', 
+            ['class' => 'form-control selectpicker'])
+        );
 
         if ($this->request->isPost())
         {

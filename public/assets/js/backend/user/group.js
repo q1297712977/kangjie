@@ -53,7 +53,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form', 'jstree'], function (
             Table.api.bindevent(table);
         },
         add: function () {
-            Controller.api.bindevent();
+            Controller.api.bindevent($("form[role=form]"));
         },
         edit: function () {
             Controller.api.bindevent();
