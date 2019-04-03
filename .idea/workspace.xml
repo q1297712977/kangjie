@@ -17,10 +17,10 @@
     <session id="658450003">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="2" />
+          <entry key="project.closed" value="4" />
           <entry key="project.open.time.21" value="1" />
-          <entry key="project.open.time.6" value="1" />
-          <entry key="project.opened" value="2" />
+          <entry key="project.open.time.6" value="3" />
+          <entry key="project.opened" value="4" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -307,6 +307,8 @@
       <updated>1554260722620</updated>
       <workItem from="1554260725034" duration="19945000" />
       <workItem from="1554285445671" duration="359000" />
+      <workItem from="1554286011517" duration="144000" />
+      <workItem from="1554286182727" duration="37000" />
     </task>
     <task id="LOCAL-00001" summary="初步实现了会员注册功能，限制权限出问题了，在登录管理员后台只显示自己名下的角色未解决">
       <created>1554285215346</created>
@@ -326,12 +328,12 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="20304000" />
+    <option name="totallyTimeSpent" value="20485000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18176973" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18550107" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -603,6 +605,11 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2106" />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/application/admin/controller/user/User.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="297">
@@ -664,11 +671,6 @@
             <element signature="e#1882#2011#0#PHP" />
           </folding>
         </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2106" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/application/admin/validate/Admin.php">
