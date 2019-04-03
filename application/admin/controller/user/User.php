@@ -74,5 +74,71 @@ class User extends Backend
         $this->view->assign('groupList', build_select('row[group_id]', \app\admin\model\UserGroup::column('id,name'), $row['group_id'], ['class' => 'form-control selectpicker']));
         return parent::edit($ids);
     }
+    /*
+     * 注册
+     * */
+    public function register()
+    {
+        $url = $this->request->request('url');
+        if ($this->auth->id)
+            $this->success(__('You\'ve logged in, do not login again'), $url);
+        if ($this->request->isPost()) {
+            $username = $this->request->post('username');
+            $password = $this->request->post('password');
+            $email = $this->request->post('email');
+            $mobile = $this->request->post('mobile', '');
+            $token = $this->request->post('__token__');
+            $rule = [
+                'username'  => 'require|length:3,30',
+                'password'  => 'require|length:6,30',
+                'email'     => 'require|email',
+                'mobile'    => 'regex:/^1\d{10}$/',
+                '__token__' => 'token',
+            ];
+
+            $msg = [
+                'username.require' => 'Username can not be empty',
+                'username.length'  => 'Username must be 3 to 30 characters',
+                'password.require' => 'Password can not be empty',
+                'password.length'  => 'Password must be 6 to 30 characters',
+                'email'            => 'Email is incorrect',
+                'mobile'           => 'Mobile is incorrect',
+            ];
+            $data = [
+                'username'  => $username,
+                'password'  => $password,
+                'email'     => $email,
+                'mobile'    => $mobile,
+                '__token__' => $token,
+            ];
+            $validate = new Validate($rule, $msg);
+            $result = $validate->check($data);
+            if (!$result) {
+                $this->error(__($validate->getError()), null, ['token' => $this->request->token()]);
+            }
+            if ($this->auth->register($username, $password, $email, $mobile)) {
+                $synchtml = '';
+                ////////////////同步到Ucenter////////////////
+                if (defined('UC_STATUS') && UC_STATUS) {
+                    $uc = new \addons\ucenter\library\client\Client();
+                    $synchtml = $uc->uc_user_synregister($this->auth->id, $password);
+                }
+                $this->success(__('Sign up successful') . $synchtml, $url ? $url : url('user/index'));
+            } else {
+                $this->error($this->auth->getError(), null, ['token' => $this->request->token()]);
+            }
+        }
+        //判断来源
+        $referer = $this->request->server('HTTP_REFERER');
+        if (!$url && (strtolower(parse_url($referer, PHP_URL_HOST)) == strtolower($this->request->host()))
+            && !preg_match("/(user\/login|user\/register)/i", $referer)) {
+            $url = $referer;
+        }
+        $this->view->assign('url', $url);
+        $this->view->assign('title', __('Register'));
+        $this->view->assign('groupList', build_select('1', \app\admin\model\UserGroup::column('id,name'), $row['group_id'], ['class' => 'form-control selectpicker']));
+//        return $this->view->fetch();
+        return parent::add();
+    }
 
 }

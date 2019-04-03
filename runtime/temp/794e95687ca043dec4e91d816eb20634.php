@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:65:"E:\kangjie\public/../application/admin\view\auth\group\index.html";i:1547349021;s:53:"E:\kangjie\application\admin\view\layout\default.html";i:1547349021;s:50:"E:\kangjie\application\admin\view\common\meta.html";i:1547349021;s:52:"E:\kangjie\application\admin\view\common\script.html";i:1547349021;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:68:"E:\kangjie\public/../application/admin\view\auth\adminlog\index.html";i:1547349021;s:53:"E:\kangjie\application\admin\view\layout\default.html";i:1547349021;s:50:"E:\kangjie\application\admin\view\common\meta.html";i:1547349021;s:52:"E:\kangjie\application\admin\view\common\script.html";i:1547349021;}*/ ?>
 <!DOCTYPE html>
 <html lang="<?php echo $config['language']; ?>">
     <head>
@@ -58,11 +58,11 @@
             <div class="tab-pane fade active in" id="one">
                 <div class="widget-body no-padding">
                     <div id="toolbar" class="toolbar">
-                        <?php echo build_toolbar('refresh,add,delete'); ?>
+                        <?php echo build_toolbar('refresh,delete'); ?>
                     </div>
                     <table id="table" class="table table-striped table-bordered table-hover" 
-                           data-operate-edit="<?php echo $auth->check('auth/group/edit'); ?>" 
-                           data-operate-del="<?php echo $auth->check('auth/group/del'); ?>" 
+                           data-operate-detail="<?php echo $auth->check('auth/adminlog/index'); ?>" 
+                           data-operate-del="<?php echo $auth->check('auth/adminlog/del'); ?>" 
                            width="100%">
                     </table>
                 </div>
@@ -71,7 +71,6 @@
         </div>
     </div>
 </div>
-
                             </div>
                         </div>
                     </div>

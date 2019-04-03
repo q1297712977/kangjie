@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:63:"E:\kangjie\public/../application/admin\view\auth\group\add.html";i:1547349021;s:53:"E:\kangjie\application\admin\view\layout\default.html";i:1547349021;s:50:"E:\kangjie\application\admin\view\common\meta.html";i:1547349021;s:52:"E:\kangjie\application\admin\view\common\script.html";i:1547349021;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:62:"E:\kangjie\public/../application/admin\view\user\user\add.html";i:1554263710;s:53:"E:\kangjie\application\admin\view\layout\default.html";i:1547349021;s:50:"E:\kangjie\application\admin\view\common\meta.html";i:1547349021;s:52:"E:\kangjie\application\admin\view\common\script.html";i:1547349021;}*/ ?>
 <!DOCTYPE html>
 <html lang="<?php echo $config['language']; ?>">
     <head>
@@ -51,26 +51,34 @@
                             <?php endif; ?>
                             <div class="content">
                                 <form id="add-form" class="form-horizontal form-ajax" role="form" data-toggle="validator" method="POST" action="">
-    <input type="hidden" name="row[rules]" value="" />
     <div class="form-group">
-        <label class="control-label col-xs-12 col-sm-2"><?php echo __('Parent'); ?>:</label>
+        <label class="control-label col-xs-12 col-sm-2"><?php echo __('Group'); ?>:</label>
         <div class="col-xs-12 col-sm-8">
-            <?php echo build_select('row[pid]', $groupdata, null, ['class'=>'form-control selectpicker', 'data-rule'=>'required']); ?>
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="control-label col-xs-12 col-sm-2"><?php echo __('Name'); ?>:</label>
-        <div class="col-xs-12 col-sm-8">
-            <input type="text" class="form-control" id="name" name="row[name]" value="" data-rule="required" />
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="control-label col-xs-12 col-sm-2"><?php echo __('Permission'); ?>:</label>
-        <div class="col-xs-12 col-sm-8">
-            <span class="text-muted"><input type="checkbox" name="" id="checkall" /> <label for="checkall"><small><?php echo __('Check all'); ?></small></label></span>
-            <span class="text-muted"><input type="checkbox" name="" id="expandall" /> <label for="expandall"><small><?php echo __('Expand all'); ?></small></label></span>
 
-            <div id="treeview"></div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="username" class="control-label col-xs-12 col-sm-2"><?php echo __('Username'); ?>:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input type="text" class="form-control" id="username" name="row[username]" value="" data-rule="required;username" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="email" class="control-label col-xs-12 col-sm-2"><?php echo __('Email'); ?>:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input type="email" class="form-control" id="email" name="row[email]" value="" data-rule="required;email" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="nickname" class="control-label col-xs-12 col-sm-2"><?php echo __('Nickname'); ?>:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input type="text" class="form-control" id="nickname" name="row[nickname]" autocomplete="off" value="" data-rule="required" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="password" class="control-label col-xs-12 col-sm-2"><?php echo __('Password'); ?>:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input type="password" class="form-control" id="password" name="row[password]" autocomplete="new-password" value="" data-rule="required;password" />
         </div>
     </div>
     <div class="form-group">
@@ -87,7 +95,6 @@
         </div>
     </div>
 </form>
-
                             </div>
                         </div>
                     </div>
