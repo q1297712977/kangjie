@@ -19,7 +19,7 @@
     <div class="form-group">
         <label class="control-label col-xs-12 col-sm-2">指定管理员:</label>
         <div class="col-xs-12 col-sm-8">
-            {:build_select('row[admin_id]', $manager, session('admin')['id'], ['class'=>'form-control selectpicker', 'multiple'=>'','data-rule'=>'required'])}
+            {:build_select('row[admin_id]', $manager, session('admin')['id'], ['class'=>'form-control selectpicker', 'data-rule'=>'required'])}
         </div>
     </div>
     <!-- 指定管理员结束 -->

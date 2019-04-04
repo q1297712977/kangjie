@@ -24,6 +24,9 @@ class User extends Backend
     # 会员角色组
     protected $groupList = [];
 
+    #限制只查看自己的及下面的信息
+//    protected $dataLimit = 'auth';
+
     /**
      * @var \app\admin\model\User
      */
@@ -36,16 +39,18 @@ class User extends Backend
         $this->model = model('User');
 
         $this->childrenAdminIds = $this->auth->getChildrenAdminIds(true);
-
+//        var_dump($this->childrenAdminIds);
         $childrenAdminIds = implode(',',$this->childrenAdminIds);
         # 判断当前登陆的人员信息
         if ($this->auth->isSuperAdmin())
         {
             # 如果是超级管理员，查询所有会员角色组
             $userGroup = collection(UserGroup::select())->toArray();
+//            var_dump($userGroup);
         }else{
             # 不是超级管理员，查询当前管理员所拥有的会员角色组
             $userGroup = collection(UserGroup::where('admin_id', 'in', implode(',',$this->childrenAdminIds) )->select())->toArray();
+//            var_dump($userGroup);
         }
         # 将查询结果中的id转成字符串，方便使用in
         $temp = '';
@@ -56,7 +61,7 @@ class User extends Backend
         # 处理添加会员中的下拉菜单
         $temp = [];
         foreach ($userGroup as $value) {
-            $temp[$value['id']] = $value['name']; 
+            $temp[$value['id']] = $value['name'];
         }
         $this->groupList = $temp;
         
@@ -77,7 +82,6 @@ class User extends Backend
             {
                 return $this->selectpage();
             }
-
             list($where, $sort, $order, $offset, $limit) = $this->buildparams();
             $total = $this->model
                     ->with('group')
@@ -92,13 +96,13 @@ class User extends Backend
                     ->order($sort, $order)
                     ->limit($offset, $limit)
                     ->select();
-
             foreach ($list as $k => $v)
             {
                 $v->hidden(['password', 'salt']);
             }
             $result = array("total" => $total, "rows" => $list);
-
+//            var_dump($total);
+//            var_dump($list);
             return json($result);
         }
         return $this->view->fetch();
@@ -146,15 +150,17 @@ class User extends Backend
                     $this->error($this->model->getError());
                 }
                 $group = $this->request->post('row/a');
-//                var_dump($group);
+                $gp = $this->request->post();
+//                print_r($gp);
+//                print_r($group);
                 //过滤不允许的组别,避免越权
 //                var_dump($this->childrenGroupIds);
-                $group = array_intersect($this->childrenGroupIds, $group);
+//                $group = array_intersect($this->childrenGroupIds, $group);
                 $dataset = [];
-                foreach ($group as $value)
-                {
-                    $dataset[] = ['user_id' => $this->model->id, 'admin_id' => $id];
-                }
+//                foreach ($group as $value)
+//                {
+                    $dataset[] = ['user_id' => $this->model->id, 'admin_id' => session('admin')['id']];
+//                }
                 model('Attachment')->saveAll($dataset);
                 $this->success();
             }

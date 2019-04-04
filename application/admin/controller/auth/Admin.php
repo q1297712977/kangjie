@@ -144,8 +144,9 @@ class Admin extends Backend
                 }
                 $group = $this->request->post("group/a");
                 $gp = $this->request->post();
-//                var_dump($group);
-//                print_r($gp);
+                var_dump($this->childrenGroupIds);
+                var_dump($group);
+                var_dump($gp);
                 //过滤不允许的组别,避免越权
                 $group = array_intersect($this->childrenGroupIds, $group);
                 $dataset = [];

@@ -30,5 +30,10 @@ class UserGroup extends Model
         $list = $this->getStatusList();
         return isset($list[$value]) ? $list[$value] : '';
     }
+////进行两个表
+    public function admin()
+    {
+        return $this->belongsTo("Admin", "admin_id", 'id', [], 'LEFT')->setEagerlyType(0);
+    }
 
 }
