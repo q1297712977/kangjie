@@ -34,9 +34,11 @@ class Rule extends Backend
             $v['remark'] = __($v['remark']);
         }
         unset($v);
+
         Tree::instance()->init($ruleList);
         $this->rulelist = Tree::instance()->getTreeList(Tree::instance()->getTreeArray(0), 'title');
         $ruledata = [0 => __('None')];
+
         foreach ($this->rulelist as $k => &$v)
         {
             if (!$v['ismenu'])
