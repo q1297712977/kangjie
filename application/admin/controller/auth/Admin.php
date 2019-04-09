@@ -112,6 +112,7 @@ class Admin extends Backend
                     ->select();
             foreach ($list as $k => &$v)
             {
+
                 $groups = isset($adminGroupName[$v['id']]) ? $adminGroupName[$v['id']] : [];
                 $v['groups'] = implode(',', array_keys($groups));
                 $v['groups_text'] = implode(',', array_values($groups));

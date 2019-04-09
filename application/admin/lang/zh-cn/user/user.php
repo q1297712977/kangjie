@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'Id'             => 'ID',
+    'Id'             => '编号',
     'Group_id'       => '组别ID',
     'Username'       => '用户名',
     'Nickname'       => '昵称',

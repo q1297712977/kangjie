@@ -4,6 +4,7 @@ namespace app\admin\controller\user;
 
 use app\common\controller\Backend;
 use app\admin\model\AuthGroup;
+use app\admin\model\Admin;
 use app\admin\model\UserGroup;
 use app\admin\model\AuthGroupAccess;
 use fast\Tree;
@@ -38,7 +39,7 @@ class Group extends Backend
         $this->manager_mode = model('Admin');
 
         $this->childrenAdminIds = $this->auth->getChildrenAdminIds(true);
-        $childrenGroupIds = $this->auth->getChildrenGroupIds(true);
+        $this->childrenGroupIds = $this->auth->getChildrenGroupIds(true);
 
         $groupList = collection(AuthGroup::where('id', 'in', $this->childrenGroupIds)->select())->toArray();
 
@@ -104,12 +105,12 @@ class Group extends Backend
         $list = collection($this->manager_mode
                 ->where($where)
                 ->where('id', 'in', $this->childrenAdminIds)
-                ->field(['id', 'nickname'])
+                ->field(['id', 'username'])
                 ->order($sort, $order)
                 ->select())->toArray();
         # 整理到下拉菜单
         foreach ($list as $key => $value) {
-            $temp[$value['id']] = $value['nickname'];
+            $temp[$value['id']] = $value['username'];
         }
 
         $nodeList = \app\admin\model\UserRule::getTreeList();
@@ -122,6 +123,7 @@ class Group extends Backend
     public function edit($ids = NULL)
     {
         $row = $this->model->get($ids);
+//        var_dump($row['admin_id']);
         if (!$row)
             $this->error(__('No Results were found'));
         $rules = explode(',', $row['rules']);
@@ -133,14 +135,16 @@ class Group extends Backend
         $list = collection($this->manager_mode
             ->where($where)
             ->where('id', 'in', $this->childrenAdminIds)
-            ->field(['id', 'nickname'])
+            ->field(['id', 'username'])
             ->order($sort, $order)
             ->select())->toArray();
+//        echo "<pre>";
+
         # 整理到下拉菜单
         foreach ($list as $key => $value) {
-            $temp[$value['id']] = $value['nickname'];
+            $temp[$value['id']] = $value['username'];
         }
-
+//        print_r($temp);
         $this->assign('manager', $temp);
         $nodeList = \app\admin\model\UserRule::getTreeList($rules);
         $this->assign("nodeList", $nodeList);
@@ -152,6 +156,10 @@ class Group extends Backend
      * */
     public function index()
     {
+        //开启1对1表查询
+        $this->relationSearch = true;
+        //需要查询的关联表字段
+        $this->searchFields = "admin.username,admin.id,admin.nickname";
         //设置过滤方法
         $this->request->filter(['strip_tags']);
         if ($this->request->isAjax())
@@ -163,18 +171,31 @@ class Group extends Backend
             }
             list($where, $sort, $order, $offset, $limit) = $this->buildparams();
             $total = $this->model
+                ->with("admin")
                 ->where($where)
+                //对当前用户权限的验证
                 ->where('admin_id','in',implode(',',$this->childrenAdminIds))
                 ->order($sort, $order)
                 ->count();
             $list = $this->model
+                ->with("admin")
                 ->where($where)
                 ->where('admin_id','in',implode(',',$this->childrenAdminIds))
                 ->order($sort, $order)
                 ->limit($offset, $limit)
                 ->select();
+
+//            $adminName = Admin::where('id', 'in', $this->childrenAdminIds)
+//                ->column('id,username');
+//            var_dump($adminName[1]);
+//            foreach ($list as $k=>&$v){
+//                $v = $v->toArray();
+//                if(isset($v['admin_id'])){
+//                    $v['admin_id'] =$adminName[$v['admin_id']];
+//                }
+//            }
+//            print_r($list);
             $result = array("total" => $total, "rows" => $list);
-//            print_r(json($result));
             return json($result);
         }
         return $this->view->fetch();

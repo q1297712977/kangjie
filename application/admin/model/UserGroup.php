@@ -33,7 +33,9 @@ class UserGroup extends Model
 ////进行两个表
     public function admin()
     {
-        return $this->belongsTo("Admin", "admin_id", 'id', [], 'LEFT')->setEagerlyType(0);
+//        return $this->belongsTo("Admin", "admin_id", 'id', [], 'LEFT')->setEagerlyType(0);
+        return $this->hasOne('Admin', 'id', 'admin_id', [], 'LEFT')->setEagerlyType(0);
     }
+
 
 }
